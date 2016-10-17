@@ -1,4 +1,4 @@
-import optionsResolver from '../option-resolver';
+import optionsResolver from './functions/option-resolver';
 
 // Array and delimiter to join
 module.exports = function (data, options) {

@@ -1,5 +1,5 @@
-import optionsResolver from '../option-resolver';
-import render from '../render';
+import optionsResolver from './functions/option-resolver';
+import render from './functions/render';
 
 
 module.exports = (options) => {
