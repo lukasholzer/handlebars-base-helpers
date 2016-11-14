@@ -13,7 +13,6 @@ module.exports = (options) => {
     if (opt['thumbnail'] === 'true') {
       return thumbnail(entry.story.content, options.data.root);
     } else {
-      if (opt['pagination'])
       return render(entry.story.content.body, options.data.root);
     }
   }
