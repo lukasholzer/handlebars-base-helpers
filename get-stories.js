@@ -10,14 +10,38 @@ module.exports = (options) => {
 
   // Render single data
   if (!Array.isArray(entry)) {
-    return render(entry.story.content.body, options.data.root);
+    if (opt['thumbnail'] === 'true') {
+      return thumbnail(entry.story.content, options.data.root);
+    } else {
+      return render(entry.story.content.body, options.data.root);
+    }
   }
 
   // Render Data array
   entry.forEach(element => {
-    html += render(element.content.body, options.data.root);
+    if (opt['thumbnail'] === 'true') {
+      html += thumbnail(element.content, options.data.root);
+    } else {
+      html += render(element.content.body, options.data.root);
+    }
   });
 
   return html;
 }
 
+
+function thumbnail(element, rootData) {
+  if(!element.thumbnail_title){
+    return '';
+  }
+
+  const thumb = {
+    image: element.thumbnail_image,
+    title: element.thumbnail_title,
+    date: element.thumbnail_date,
+    text: element.thumbnail_text,
+    component: 'thumbnail'
+  };
+
+  return render(thumb, rootData)
+}
