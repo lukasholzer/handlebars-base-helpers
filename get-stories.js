@@ -1,5 +1,6 @@
 import optionsResolver from './functions/option-resolver';
 import render from './functions/render';
+import colors from 'colors'
 
 
 module.exports = (options) => {
@@ -8,19 +9,28 @@ module.exports = (options) => {
   let entry = options.data.root[opt['folder']];
   let html = '';
 
-  // Render single data
-  if (!Array.isArray(entry)) {
-    if (opt['thumbnail'] === 'true') {
-      return thumbnail(entry.story.content, options.data.root);
-    } else {
-      return render(entry.story.content.body, options.data.root);
+  try {
+    // Render single data
+    if (!Array.isArray(entry)) {
+      if(!entry) {
+        console.warn(`[basehelpers/get-stories.js] -> \n missing folder: ${options.hash.folder}`.magenta);
+        return '';
+      }
+
+      if (opt['blog_thumbnail'] === 'true') {
+        return blog_thumbnail(entry.story.content, options.data.root);
+      } else {
+        return render(entry.story.content.body, options.data.root);
+      }
     }
+  } catch(error) {
+    console.log(`[basehelpers/get-stories.js] -> \n${error}`.red);
   }
 
   // Render Data array
   entry.forEach(element => {
-    if (opt['thumbnail'] === 'true') {
-      html += thumbnail(element.content, options.data.root);
+    if (opt['blog_thumbnail'] === 'true') {
+      html += blog_thumbnail(element.content, options.data.root);
     } else {
       html += render(element.content.body, options.data.root);
     }
@@ -30,7 +40,7 @@ module.exports = (options) => {
 }
 
 
-function thumbnail(element, rootData) {
+function blog_thumbnail(element, rootData) {
   if(!element.thumbnail_title){
     return '';
   }
@@ -40,7 +50,7 @@ function thumbnail(element, rootData) {
     title: element.thumbnail_title,
     date: element.thumbnail_date,
     text: element.thumbnail_text,
-    component: 'thumbnail'
+    component: 'blog_thumbnail'
   };
 
   return render(thumb, rootData)
