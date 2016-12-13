@@ -2,9 +2,9 @@ import handlebars from 'handlebars';
 
 module.exports = function (text) {
   text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
-  text = text.replace(`„`, `»`);
-  text = text.replace(`„`, `»`);
-  text = text.replace(/["“]/gm, `«`);
+  // text = text.replace(`„`, `»`);
+  // text = text.replace(`„`, `»`);
+  // text = text.replace(/["“]/gm, `«`);
 
 
   // get every uppercase word
